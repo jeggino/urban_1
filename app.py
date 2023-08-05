@@ -17,6 +17,6 @@ st.set_page_config(
 m = folium.Map(tiles="CartoDB positron",zoom_start=1)
 
 train_stations = ox.geometries_from_place("Amsterdam", tags={"railway":'station'}).loc["node"]
-# train_stations.explore(m=m,tooltip=["old_name:1985-2006"])
+m.add_child(train_stations.explore(tooltip=["old_name:1985-2006"]))
 
 st_data = st_folium(m, width=725)

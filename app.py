@@ -56,11 +56,19 @@ train_stations.set_geometry("buffer_geom", inplace=True)
 train_stations.set_index("name", inplace=True)
 
 #---
-building.to_crs(crs=museums.crs, inplace=True) 
+@st.cache_data
+def fetch_data():
+    data = ox.geometries_from_place("Amsterdam",tags={"building":True}).loc["way"].plot()
+    data.to_crs(crs=museums.crs, inplace=True)
+    return data
+ 
 
 #---
 STATION = st.selectbox(label="Choose a station", options=train_stations.index.tolist(), placeholder="Select...")
+
+
 try:
+    building = fetch_data()
     intersected = fuel_stations[building['geometry'].intersects(train_stations.loc[STATION, 'buffer_geom'])]
 
     polygon = pdk.Layer(
@@ -74,7 +82,7 @@ try:
     
     p = pdk.Deck(layers=[polygon])
     
-    st.pydeck_chart(pydeck_obj=r, use_container_width=True)
+    st.pydeck_chart(pydeck_obj=p, use_container_width=True)
 
 except:
     st.warning("chose a station")

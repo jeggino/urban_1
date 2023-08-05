@@ -36,4 +36,4 @@ layer = pdk.Layer(
 
 r = pdk.Deck(layers=[layer],tooltip={"text": "{name}"})
 
-st.pydeck_chart(pydeck_obj=f, use_container_width=True)
+st.pydeck_chart(pydeck_obj=r, use_container_width=True)

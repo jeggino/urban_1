@@ -37,3 +37,45 @@ layer = pdk.Layer(
 r = pdk.Deck(layers=[layer],tooltip={"text": "{name}"})
 
 st.pydeck_chart(pydeck_obj=r, use_container_width=True)
+
+#---
+# Creating radius buffer
+# Converting CRS to a meter based CRS
+train_stations.to_crs(crs=3857, inplace=True) 
+
+# Creating 1km buffer column with WKT geometry
+train_stations['buffer_geom'] = train_stations.buffer(500.0) 
+
+# Converting back to original CRS
+train_stations.to_crs(crs=4979, inplace=True) 
+
+# Setting the geometry column to the buffer geometry
+train_stations.set_geometry("buffer_geom", inplace=True)
+
+# set name as index
+train_stations.set_index("name", inplace=True)
+
+#---
+building.to_crs(crs=museums.crs, inplace=True) 
+
+#---
+STATION = st.selectbox(label="Choose a station", options=train_stations.index.tolist(), placeholder="Select...")
+try:
+    intersected = fuel_stations[building['geometry'].intersects(train_stations.loc[STATION, 'buffer_geom'])]
+
+    polygon = pdk.Layer(
+        "PolygonLayer",
+        intersected,
+        stroked=True,
+        # processes the data as a flat longitude-latitude pair
+        get_polygon="geometry.coordinates",
+        get_fill_color=[0, 0, 0, 20],
+    )
+    
+    p = pdk.Deck(layers=[polygon])
+    
+    st.pydeck_chart(pydeck_obj=r, use_container_width=True)
+
+except:
+    st.warning("chose a station")
+# Plottin the map to visualize

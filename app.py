@@ -75,7 +75,6 @@ try:
         "PolygonLayer",
         intersected,
         stroked=True,
-        # processes the data as a flat longitude-latitude pair
         get_polygon="geometry.coordinates",
         get_fill_color=[0, 0, 0, 20],
     )

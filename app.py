@@ -58,7 +58,7 @@ train_stations.set_index("name", inplace=True)
 #---
 @st.cache_data
 def fetch_data():
-    data = ox.geometries_from_place("Amsterdam",tags={"building":True}).loc["way"].plot()
+    data = ox.geometries_from_place("Amsterdam",tags={"building":True}).loc["way"]
     data.to_crs(crs=museums.crs, inplace=True)
     return data
  

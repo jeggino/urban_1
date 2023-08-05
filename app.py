@@ -56,7 +56,7 @@ train_stations.set_geometry("buffer_geom", inplace=True)
 train_stations.set_index("name", inplace=True)
 
 #---
-@st.cache_data
+
 def fetch_data():
     data = ox.geometries_from_place("Amsterdam",tags={"building":True})
     data.to_crs(crs=train_stations.crs, inplace=True)

@@ -130,7 +130,7 @@ try:
              tooltip={"text": "{index}, {LABEL}"},
             )
     
-    st.pydeck_chart(pydeck_obj=map, use_container_width=True)
+    st.pydeck_chart(pydeck_obj=map)
     st.warning("Some problem")
 
 except:

@@ -60,7 +60,7 @@ try:
     intersected = buildings[buildings['geometry'].intersects(train_stations.loc[station, 'buffer_geom'])]
     
     df_WONINGWAARDE_2022 = gpd.read_file("https://maps.amsterdam.nl/open_geodata/geojson_lnglat.php?KAARTLAAG=WONINGWAARDE_2022&THEMA=woningwaarde")
-    
+    st.warning("Some problem")
     df_join = gpd.sjoin(intersected, df_WONINGWAARDE_2022.to_crs(intersected.crs))
     df_join.to_crs(crs=4979, inplace=True) 
     

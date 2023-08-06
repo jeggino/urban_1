@@ -124,11 +124,13 @@ layers = [
 
 
 
-pdk.Deck(layers,
+chart = pdk.Deck(layers,
          # map_style='road',
          initial_view_state=INITIAL_VIEW_STATE, 
          tooltip={"text": "{index}, {LABEL}"},
         )
+
+st.pydeck_chart(pydeck_obj=chart, use_container_width=False)
 
 # st.pydeck_chart(map)
 # st.warning("Some problem")

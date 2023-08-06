@@ -1,3 +1,5 @@
+import streamlit as st
+
 import geopandas as gpd
 import osmnx as ox
 import seaborn as sns

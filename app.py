@@ -31,7 +31,6 @@ def data():
 buildings = data()[0]
 train_stations = data()[1]
 
-train_stations.plot()
 
 #---
 # Creating radius buffer
@@ -52,7 +51,6 @@ train_stations.set_index("name", inplace=True)
 
 
 #----------------------------------------------------------------
-
 try:
     station = st.selectbox(label="Chose a station", options=train_stations.index, placeholder="Select...", label_visibility="visible")
     
@@ -125,7 +123,7 @@ try:
     
     
     map = pdk.Deck(layers,
-             map_style='road',
+             # map_style='road',
              initial_view_state=INITIAL_VIEW_STATE, 
              tooltip={"text": "{index}, {LABEL}"},
             )

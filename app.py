@@ -14,7 +14,16 @@ st.set_page_config(
 )
 
 #---
-buildings = ox.geometries_from_place("Amsterdam",tags={"building":True}).loc["way"]
+@st.cache_data
+def data_buildings():
+    df = pd.DataFrame()
+    for i in range(10):
+        gdf = gpd.read_file(f'buildings_{i}.geojson')
+        df = df.append(gdf, ignore_index=True)
+    return df
+
+
+buildings = data_buildings()
 train_stations = ox.geometries_from_place("Amsterdam", tags={"railway":'station'}).loc["node"]
 
 #---

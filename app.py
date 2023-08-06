@@ -122,14 +122,14 @@ try:
         
     ]
     
-    st.warning("Some problem")
+    
     
     map = pdk.Deck(layers,
              map_style='road',
              initial_view_state=INITIAL_VIEW_STATE, 
              tooltip={"text": "{index}, {LABEL}"},
             )
-    
+    st.warning("Some problem")
     st.pydeck_chart(pydeck_obj=map, use_container_width=True)
 
 except:

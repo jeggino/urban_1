@@ -14,7 +14,7 @@ st.set_page_config(
 )
 
 #---
-@st.cache_data
+# @st.cache_data
 def data_buildings():
     df = pd.DataFrame()
     for i in range(10):

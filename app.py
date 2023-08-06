@@ -1,6 +1,6 @@
-import streamlit as st
 import geopandas as gpd
 import osmnx as ox
+import seaborn as sns
 import pydeck as pdk
 
 
@@ -11,32 +11,9 @@ st.set_page_config(
     layout="wide",
 )
 
-
-
+#---
+buildings = ox.geometries_from_place("Amsterdam",tags={"building":True}).loc["way"]
 train_stations = ox.geometries_from_place("Amsterdam", tags={"railway":'station'}).loc["node"]
-
-
-# Define a layer to display on a map
-layer = pdk.Layer(
-    "ScatterplotLayer",
-    train_stations,
-    pickable=True,
-    opacity=0.8,
-    stroked=True,
-    filled=True,
-    radius_scale=3,
-    radius_min_pixels=1,
-    radius_max_pixels=100,
-    line_width_min_pixels=1,
-    get_position="geometry.coordinates",
-    get_radius=100,
-    get_fill_color=[255, 140, 0],
-    get_line_color=[0, 0, 0],
-)
-
-r = pdk.Deck(layers=[layer],tooltip={"text": "{name}"})
-
-st.pydeck_chart(pydeck_obj=r, use_container_width=True)
 
 #---
 # Creating radius buffer
@@ -55,34 +32,86 @@ train_stations.set_geometry("buffer_geom", inplace=True)
 # set name as index
 train_stations.set_index("name", inplace=True)
 
-#---
 
-def fetch_data():
-    data = ox.geometries_from_place("Amsterdam",tags={"building":True})
-    data.to_crs(crs=train_stations.crs, inplace=True)
-    return data
- 
-
-#---
-STATION = st.selectbox(label="Choose a station", options=train_stations.index.tolist(), placeholder="Select...")
-
+#----------------------------------------------------------------
 
 try:
-    building = fetch_data()
-    intersected = fuel_stations[building['geometry'].intersects(train_stations.loc[STATION, 'buffer_geom'])]
-
-    polygon = pdk.Layer(
-        "PolygonLayer",
-        intersected,
-        stroked=True,
-        get_polygon="geometry.coordinates",
-        get_fill_color=[0, 0, 0, 20],
+    station = st.selectbox(label="Chose a station", options=train_stations.index, placeholder="Select...", label_visibility="visible")
+    
+    buildings.to_crs(crs=train_stations.crs, inplace=True) 
+    intersected = buildings[buildings['geometry'].intersects(train_stations.loc[station, 'buffer_geom'])]
+    
+    df_WONINGWAARDE_2022 = gpd.read_file("https://maps.amsterdam.nl/open_geodata/geojson_lnglat.php?KAARTLAAG=WONINGWAARDE_2022&THEMA=woningwaarde")
+    
+    df_join = gpd.sjoin(intersected, df_WONINGWAARDE_2022.to_crs(intersected.crs))
+    df_join.to_crs(crs=4979, inplace=True) 
+    
+    
+    INITIAL_VIEW_STATE = pdk.ViewState(
+        latitude=train_stations.loc[station].geometry.y, 
+        longitude=train_stations.loc[station].geometry.x,
+        zoom=15,
+        pitch=45,
+        bearing=0
     )
     
-    p = pdk.Deck(layers=[polygon])
     
-    st.pydeck_chart(pydeck_obj=p, use_container_width=True)
+    ICON_URL = "https://i2.wp.com/www.banksandlloyd.com/wp-content/uploads/2018/10/train-icon-web-small.png?ssl=1"
+    
+    data = train_stations.loc[station]
+    
+    icon_data = {
+        "url": ICON_URL,
+        "width": 242,
+        "height": 242,
+        "anchorY": 242,
+    }
+    
+    data["icon_data"] = icon_data
+    data = data.to_frame().T[["geometry","icon_data"]].reset_index()
+    
+    
+    icon_layer = pdk.Layer(
+        type="IconLayer",
+        data=data,
+        get_icon="icon_data",
+        size_scale=60,
+        get_position=[train_stations.loc[station].geometry.x, 
+                      train_stations.loc[station].geometry.y],
+        pickable=True,
+    )
+    
+    
+    colors = dict(zip(df_join.LABEL.sort_values().unique().tolist(),list(sns.color_palette("husl", len(df_join.LABEL.sort_values().unique())))))
+    
+    df_polygons = df_join[["geometry","LABEL"]]
+    df_polygons['color'] = df_polygons["LABEL"].map(colors).apply(lambda x: [i*255 for i in x])
+    
+    layers = [
+        pdk.Layer("GeoJsonLayer", 
+                  data=df_polygons , 
+                  get_fill_color='color',
+                  pickable=True,
+                  opacity=0.8,
+                    stroked=False,
+                    filled=True,
+                    extruded=True,
+                    wireframe=True,
+                  get_elevation=10
+                 ),
+        icon_layer
+        
+    ]
+    
+    
+    
+    map = pdk.Deck(layers,
+             map_style='road',
+             initial_view_state=INITIAL_VIEW_STATE, 
+             tooltip={"text": "{index}, {LABEL}"},
+            )
+    
+    st.pydeck_chart(pydeck_obj=map, use_container_width=True)
 
 except:
-    st.warning("chose a station")
-# Plottin the map to visualize
+    st.warning("Some problem")

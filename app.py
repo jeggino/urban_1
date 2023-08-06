@@ -131,5 +131,4 @@ try:
     st.pydeck_chart(map)
     st.warning("Some problem")
 
-except:
-    st.warning("Some problem")
+#

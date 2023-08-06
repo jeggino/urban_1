@@ -129,8 +129,9 @@ try:
              initial_view_state=INITIAL_VIEW_STATE, 
              tooltip={"text": "{index}, {LABEL}"},
             )
-    st.warning("Some problem")
+    
     st.pydeck_chart(pydeck_obj=map, use_container_width=True)
+    st.warning("Some problem")
 
 except:
     st.warning("Some problem")

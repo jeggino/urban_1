@@ -15,15 +15,15 @@ st.set_page_config(
 
 #---
 # @st.cache_data
-def data_buildings():
-    df = pd.DataFrame()
-    for i in range(10):
-        gdf = gpd.read_file(f'buildings_{i}.geojson')
-        df = df.append(gdf, ignore_index=True)
-    return df
+# def data_buildings():
+#     df = pd.DataFrame()
+#     for i in range(10):
+#         gdf = gpd.read_file(f'buildings_{i}.geojson')
+#         df = df.append(gdf, ignore_index=True)
+#     return df
 
 
-buildings = data_buildings()
+buildings = gpd.read_file(f'buildings_0.geojson')
 train_stations = ox.geometries_from_place("Amsterdam", tags={"railway":'station'}).loc["node"]
 
 #---

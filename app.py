@@ -22,9 +22,14 @@ st.set_page_config(
 #         df = df.append(gdf, ignore_index=True)
 #     return df
 
-
-buildings = gpd.read_file(f'buildings_0.geojson')
-train_stations = ox.geometries_from_place("Amsterdam", tags={"railway":'station'}).loc["node"]
+@st.cache_data
+def data():
+    buildings = gpd.read_file(f'buildings_0.geojson')
+    train_stations = gpd.read_file(f'train_stations.geojson')
+    return buildings, train_stations
+    
+buildings = data()[0]
+train_stations = data()[1]
 
 #---
 # Creating radius buffer

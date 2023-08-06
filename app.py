@@ -31,6 +31,8 @@ def data():
 buildings = data()[0]
 train_stations = data()[1]
 
+st.dataframe(buildings.drop("geometry",axis=1))
+st.dataframe(train_stations.drop("geometry",axis=1))
 
 #---
 # Creating radius buffer

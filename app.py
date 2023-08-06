@@ -104,6 +104,7 @@ try:
     
     df_polygons = df_join[["geometry","LABEL"]]
     df_polygons['color'] = df_polygons["LABEL"].map(colors).apply(lambda x: [i*255 for i in x])
+    st.warning("Some problem")
     
     layers = [
         pdk.Layer("GeoJsonLayer", 

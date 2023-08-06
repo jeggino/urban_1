@@ -31,6 +31,8 @@ def data():
 buildings = data()[0]
 train_stations = data()[1]
 
+train_stations.plot()
+
 #---
 # Creating radius buffer
 # Converting CRS to a meter based CRS

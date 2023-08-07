@@ -30,7 +30,7 @@ def data():
 
 a = data_buildings()
 
-st.dataframe(a.drop('geometry',axis=1)
+st.dataframe(a.drop('geometry',axis=1))
 
 buildings = data()[0]
 train_stations = data()[1]

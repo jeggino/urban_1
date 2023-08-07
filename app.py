@@ -31,8 +31,6 @@ def data():
 buildings = data()[0]
 train_stations = data()[1]
 
-st.dataframe(buildings.drop("geometry",axis=1))
-st.dataframe(train_stations.drop("geometry",axis=1))
 
 #---
 # Creating radius buffer
@@ -57,18 +55,14 @@ train_stations.set_index("name", inplace=True)
 station = st.selectbox(label="Chose a station", options=train_stations.index, placeholder="Select...", label_visibility="visible")
 
 buildings.to_crs(crs=train_stations.crs, inplace=True) 
+
 intersected = buildings[buildings['geometry'].intersects(train_stations.loc[station, 'buffer_geom'])]
-
-df_WONINGWAARDE_2022 = gpd.read_file("https://maps.amsterdam.nl/open_geodata/geojson_lnglat.php?KAARTLAAG=WONINGWAARDE_2022&THEMA=woningwaarde")
-
-df_join = gpd.sjoin(intersected, df_WONINGWAARDE_2022.to_crs(intersected.crs))
-df_join.to_crs(crs=4979, inplace=True) 
 
 
 INITIAL_VIEW_STATE = pdk.ViewState(
     latitude=train_stations.loc[station].geometry.y, 
     longitude=train_stations.loc[station].geometry.x,
-    zoom=15,
+    zoom=14,
     pitch=45,
     bearing=0
 )
@@ -77,62 +71,128 @@ INITIAL_VIEW_STATE = pdk.ViewState(
 ICON_URL = "https://i2.wp.com/www.banksandlloyd.com/wp-content/uploads/2018/10/train-icon-web-small.png?ssl=1"
 
 data = train_stations.loc[station]
-
 icon_data = {
     "url": ICON_URL,
     "width": 242,
     "height": 242,
     "anchorY": 242,
 }
-
 data["icon_data"] = icon_data
 data = data.to_frame().T[["geometry","icon_data"]].reset_index()
+
+
 
 
 icon_layer = pdk.Layer(
     type="IconLayer",
     data=data,
     get_icon="icon_data",
-    size_scale=60,
-    get_position=[train_stations.loc[station].geometry.x, 
-                  train_stations.loc[station].geometry.y],
+    size_scale=40,
+    get_position=[train_stations.loc[station].geometry.x, train_stations.loc[station].geometry.y],
     pickable=True,
 )
 
 
-colors = dict(zip(df_join.LABEL.sort_values().unique().tolist(),list(sns.color_palette("husl", len(df_join.LABEL.sort_values().unique())))))
-
-df_polygons = df_join[["geometry","LABEL"]]
-df_polygons['color'] = df_polygons["LABEL"].map(colors).apply(lambda x: [i*255 for i in x])
 
 
+intersected.to_crs(crs=4979, inplace=True) 
 layers = [
     pdk.Layer("GeoJsonLayer", 
-              data=df_polygons , 
-              get_fill_color='color',
-              pickable=True,
-              opacity=0.8,
-                stroked=False,
-                filled=True,
-                extruded=True,
-                wireframe=True,
-              get_elevation=10
+              data=intersected , 
+              get_fill_color=[255, 255, 255],
              ),
     icon_layer
     
 ]
 
+map = pdk.Deck(layers,initial_view_state=INITIAL_VIEW_STATE, tooltip={"text": "{index}"},)
+
+st.pydeck_chart(pydeck_obj=map, use_container_width=False)
 
 
-chart = pdk.Deck(layers,
-         # map_style='road',
-         initial_view_state=INITIAL_VIEW_STATE, 
-         tooltip={"text": "{index}, {LABEL}"},
-        )
 
-st.pydeck_chart(pydeck_obj=chart, use_container_width=False)
 
-# st.pydeck_chart(map)
-# st.warning("Some problem")
 
-#
+
+
+
+# buildings.to_crs(crs=train_stations.crs, inplace=True) 
+# intersected = buildings[buildings['geometry'].intersects(train_stations.loc[station, 'buffer_geom'])]
+
+# df_WONINGWAARDE_2022 = gpd.read_file("https://maps.amsterdam.nl/open_geodata/geojson_lnglat.php?KAARTLAAG=WONINGWAARDE_2022&THEMA=woningwaarde")
+
+# df_join = gpd.sjoin(intersected, df_WONINGWAARDE_2022.to_crs(intersected.crs))
+# df_join.to_crs(crs=4979, inplace=True) 
+
+
+# INITIAL_VIEW_STATE = pdk.ViewState(
+#     latitude=train_stations.loc[station].geometry.y, 
+#     longitude=train_stations.loc[station].geometry.x,
+#     zoom=15,
+#     pitch=45,
+#     bearing=0
+# )
+
+
+# ICON_URL = "https://i2.wp.com/www.banksandlloyd.com/wp-content/uploads/2018/10/train-icon-web-small.png?ssl=1"
+
+# data = train_stations.loc[station]
+
+# icon_data = {
+#     "url": ICON_URL,
+#     "width": 242,
+#     "height": 242,
+#     "anchorY": 242,
+# }
+
+# data["icon_data"] = icon_data
+# data = data.to_frame().T[["geometry","icon_data"]].reset_index()
+
+
+# icon_layer = pdk.Layer(
+#     type="IconLayer",
+#     data=data,
+#     get_icon="icon_data",
+#     size_scale=60,
+#     get_position=[train_stations.loc[station].geometry.x, 
+#                   train_stations.loc[station].geometry.y],
+#     pickable=True,
+# )
+
+
+# colors = dict(zip(df_join.LABEL.sort_values().unique().tolist(),list(sns.color_palette("husl", len(df_join.LABEL.sort_values().unique())))))
+
+# df_polygons = df_join[["geometry","LABEL"]]
+# df_polygons['color'] = df_polygons["LABEL"].map(colors).apply(lambda x: [i*255 for i in x])
+
+
+# layers = [
+#     pdk.Layer("GeoJsonLayer", 
+#               data=df_polygons , 
+#               get_fill_color='color',
+#               pickable=True,
+#               opacity=0.8,
+#                 stroked=False,
+#                 filled=True,
+#                 extruded=True,
+#                 wireframe=True,
+#               get_elevation=10
+#              ),
+#     icon_layer
+    
+# ]
+
+
+
+# chart = pdk.Deck(layers,
+#          # map_style='road',
+#          initial_view_state=INITIAL_VIEW_STATE, 
+#          tooltip={"text": "{index}, {LABEL}"},
+#         )
+
+# st.pydeck_chart(pydeck_obj=chart, use_container_width=False)
+
+# # st.pydeck_chart(map)
+# # st.warning("Some problem")
+
+# #

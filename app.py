@@ -27,7 +27,11 @@ def data():
     buildings = data_buildings()
     train_stations = gpd.read_file(f'train_stations.geojson')
     return buildings, train_stations
-    
+
+a = data_buildings()
+
+st.dataframe(a.drop('geometry',axis=1)
+
 buildings = data()[0]
 train_stations = data()[1]
 

@@ -85,8 +85,7 @@ icon_layer = pdk.Layer(
     data=data,
     get_icon="icon_data",
     size_scale=60,
-    get_position=[train_stations.loc[station].geometry.x, 
-                  train_stations.loc[station].geometry.y],
+    get_position="geometry.coordinates",
     pickable=True,
 )
 
@@ -115,7 +114,7 @@ polygon_layer = pdk.Layer("GeoJsonLayer",
 #----------------------------------------------------------------
 layers = [
     polygon_layer,
-    # icon_layer
+    icon_layer
 ]
 
 INITIAL_VIEW_STATE = pdk.ViewState(

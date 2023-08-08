@@ -85,7 +85,7 @@ icon_layer = pdk.Layer(
     data=data,
     get_icon="icon_data",
     size_scale=60,
-    get_position="geometry.coordinates",
+    get_position="[geometry.x,geometry.y]",
     pickable=True,
 )
 

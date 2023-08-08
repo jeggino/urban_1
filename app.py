@@ -13,7 +13,7 @@ st.set_page_config(
     layout="wide",
 )
 
-left, right = st.columns([1,3])
+left, right = st.columns([2,3])
 #----------------------------------------------------------------
 @st.cache_data
 def data_buildings():

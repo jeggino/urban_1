@@ -130,3 +130,23 @@ map = pdk.Deck(layers,
 
 #----------------------------------------------------------------
 st.pydeck_chart(map)
+
+
+#----------------------------------------------------------------
+
+
+data_df = df_join.LABEL.value_counts().to_frame().reset_index()
+
+st.data_editor(
+    data_df,
+    column_config={
+        "Ammount": st.column_config.ProgressColumn(
+            "LABEL",
+            help="The sales volume in USD",
+            format="$%f",
+            min_value=data_df.LABEL.min(),
+            max_value=data_df.LABEL.max(),
+        ),
+    },
+    hide_index=True,
+)

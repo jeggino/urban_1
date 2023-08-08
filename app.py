@@ -34,6 +34,28 @@ st.set_page_config(
 
 train_stations = gpd.read_file(f'train_stations.geojson')
 buildings = gpd.read_file(f'buildings_0.geojson')
+
+polygon_layer = pdk.Layer("GeoJsonLayer", 
+    data=train_stations , 
+    get_fill_color='color',
+    pickable=True,
+    opacity=0.8,
+    stroked=False,
+    filled=True,
+    extruded=True,
+    wireframe=True,
+    get_elevation=10
+    )
+
+map = pdk.Deck(polygon_layer,
+         map_style='road',
+         # initial_view_state=INITIAL_VIEW_STATE, 
+         tooltip={"text": "{index}, {LABEL}"},
+        )
+
+#----------------------------------------------------------------
+st.pydeck_chart(map)
+
 #----------------------------------------------------------------
 # Creating radius buffer
 # Converting CRS to a meter based CRS

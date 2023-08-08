@@ -142,7 +142,7 @@ INITIAL_VIEW_STATE = pdk.ViewState(
 map = pdk.Deck(layers,
          map_style='road',
          initial_view_state=INITIAL_VIEW_STATE, 
-         tooltip={"text": "WONINGWAARDE 2022: {LABEL}"},
+         tooltip={"text": "Price for square meters: {LABEL}"},
         )
 
 #----------------------------------------------------------------

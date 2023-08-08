@@ -101,8 +101,8 @@ st.dataframe(df_polygons.drop('geometry',axis=1))
 
 
 polygon_layer = pdk.Layer("GeoJsonLayer", 
-    data=df_polygons , 
-    get_fill_color='color',
+    data=df_polygons, 
+    get_fill_color=[250,250,250],
     pickable=True,
     opacity=0.8,
     stroked=False,

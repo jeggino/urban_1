@@ -135,12 +135,17 @@ st.pydeck_chart(map)
 #----------------------------------------------------------------
 
 
-data_df = df_join.groupby("LABEL",as_index=False).size()
+# data_df = df_join.groupby("LABEL",as_index=False).size()
+data_df = pd.DataFrame(
+    {
+        "sales": [200, 550, 1000, 80],
+    }
+)
 
 st.data_editor(
     data_df,
     column_config={
-        "size": st.column_config.ProgressColumn(
+        "sales": st.column_config.ProgressColumn(
             "Amount",
             help="Number of building for this class",
             format="%f",

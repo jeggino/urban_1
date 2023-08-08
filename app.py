@@ -92,6 +92,8 @@ map = pdk.Deck(layers,
          # tooltip={"text": "{index}, {LABEL}"},
         )
 
+#----------------------------------------------------------------
+st.pydeck_chart(map)
 
 # df_WONINGWAARDE_2022 = gpd.read_file("https://maps.amsterdam.nl/open_geodata/geojson_lnglat.php?KAARTLAAG=WONINGWAARDE_2022&THEMA=woningwaarde")
 

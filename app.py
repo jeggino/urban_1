@@ -33,7 +33,7 @@ st.set_page_config(
 # train_stations = data()[1]
 
 train_stations = gpd.read_file(f'train_stations.geojson')
-buildings = gpd.read_file('buildings_1.geojson')
+buildings = gpd.read_file('buildings_2.geojson')
 
 
 #----------------------------------------------------------------

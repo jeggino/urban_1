@@ -140,9 +140,9 @@ data_df = df_join.LABEL.value_counts().to_frame().reset_index()
 st.data_editor(
     data_df,
     column_config={
-        "Ammount": st.column_config.ProgressColumn(
-            "LABEL",
-            help="The sales volume in USD",
+        "LABEL": st.column_config.ProgressColumn(
+            "Ammount",
+            help="Number of building for this class",
             format="$%f",
             min_value=data_df.LABEL.min(),
             max_value=data_df.LABEL.max(),

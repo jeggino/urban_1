@@ -14,13 +14,13 @@ st.set_page_config(
 )
 
 #----------------------------------------------------------------
-# @st.cache_data
-# def data_buildings():
-#     df = pd.DataFrame()
-#     for i in range(10):
-#         gdf = gpd.read_file(f'buildings_{i}.geojson')
-#         df = df.append(gdf, ignore_index=True)
-#     return df
+@st.cache_data
+def data_buildings():
+    df = pd.DataFrame()
+    for i in range(10):
+        gdf = gpd.read_file(f'buildings_{i}.geojson')
+        df = df.append(gdf, ignore_index=True)
+    return df
 
 # @st.cache_data
 # def data():
@@ -33,7 +33,7 @@ st.set_page_config(
 # train_stations = data()[1]
 
 train_stations = gpd.read_file(f'train_stations.geojson')
-buildings = gpd.read_file('buildings_2.geojson')
+buildings =  data_buildings()
 
 
 #----------------------------------------------------------------

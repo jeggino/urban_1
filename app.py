@@ -156,6 +156,6 @@ bar = base.mark_bar(
 
 text = base.mark_text(align='left', dx=2)
 
-left.altair_chart(altair_chart=(bar + text), use_container_width=True, theme=None)
+left.altair_chart(altair_chart=(bar + text), use_container_width=True, theme="streamlit")
 
 

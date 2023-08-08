@@ -67,7 +67,7 @@ icon_data = {
     "url": ICON_URL,
     "width": 242,
     "height": 142,
-    "anchorY": 242,
+    "anchorY": 0,
 }
 
 data = train_stations.loc[station]

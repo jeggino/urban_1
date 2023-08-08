@@ -61,14 +61,14 @@ intersected = buildings[buildings['geometry'].intersects(train_stations.loc[stat
 
 polygon_layer = pdk.Layer("GeoJsonLayer", 
     data=intersected , 
-    # get_fill_color='color',
-    pickable=True,
-    opacity=0.8,
-    stroked=False,
-    # filled=True,
-    extruded=True,
-    wireframe=True,
-    get_elevation=10
+    # # get_fill_color='color',
+    # pickable=True,
+    # opacity=0.8,
+    # stroked=False,
+    # # filled=True,
+    # extruded=True,
+    # wireframe=True,
+    # get_elevation=10
     )
 
 

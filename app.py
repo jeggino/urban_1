@@ -4,7 +4,7 @@ import geopandas as gpd
 import osmnx as ox
 import seaborn as sns
 import pydeck as pdk
-
+import altair as alt
 
 #----------------------------------------------------------------
 st.set_page_config(
@@ -150,8 +150,6 @@ st.pydeck_chart(map)
 
 
 #----------------------------------------------------------------
-import altair as alt
-
 source = df_join.groupby("LABEL",as_index=False).size()
 
 domain = df_join.LABEL.sort_values().unique().tolist()
@@ -159,9 +157,12 @@ range_ = list(sns.color_palette("husl", len(df_join.LABEL.sort_values().unique()
 
 base = alt.Chart(source).encode(
     y=alt.Y('LABEL:O',title=""),
-    x=alt.X('size:Q',title="Number of buildings",axis=None),
+    x=alt.X('size:Q',title="",axis=None),
     color=alt.Color('LABEL:O',legend=None, scale=alt.Scale(domain=domain, range=range_)),
-    text='size:Q'
+    text='size:Q',
+    tooltip=[alt.Tooltip('LABEL:O', title='Price range for square meters'),
+             alt.Tooltip('size:Q', title='Number of buildings'),]
+      
 )
 
 bar = base.mark_bar(

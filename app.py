@@ -32,8 +32,17 @@ def data_buildings():
 # buildings = data()[0]
 # train_stations = data()[1]
 
-train_stations = gpd.read_file(f'train_stations.geojson')
-buildings =  data_buildings()
+train_stations = gpd.read_file('train_stations.geojson')
+
+buildings = pd.DataFrame()
+buildings =  gpd.read_file('buildings_0.geojson')
+buildings_1 =  gpd.read_file('buildings_1.geojson')
+buildings_2 =  gpd.read_file('buildings_2.geojson')
+
+buildings = buildings.append(buildings_0, ignore_index=True)
+buildings = buildings.append(buildings_1, ignore_index=True)
+buildings = buildings.append(buildings_2, ignore_index=True)
+
 
 
 #----------------------------------------------------------------

@@ -64,7 +64,7 @@ df_WONINGWAARDE_2022 = gpd.read_file("https://maps.amsterdam.nl/open_geodata/geo
 df_join = gpd.sjoin(intersected, df_WONINGWAARDE_2022.to_crs(intersected.crs))
 
 #----------------------------------------------------------------
-ICON_URL = "https://icon-library.com/images/train-icon/train-icon-9.jpg"
+ICON_URL = "https://th.bing.com/th/id/R.210d1413e803794de617b1e6c6eddcdb?rik=NGXB8Kb60FgrQw&riu=http%3a%2f%2fclipart-library.com%2fimages_k%2ftrain-silhouette-png%2ftrain-silhouette-png-21.png&ehk=s0elGcYU9ZR3Pim0iQnF1SN4VEJDXP0GxwFvqF4SHtY%3d&risl=&pid=ImgRaw&r=0"
 
 icon_data = {
     "url": ICON_URL,

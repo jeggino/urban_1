@@ -160,7 +160,7 @@ base = alt.Chart(source).encode(
     x=alt.X('size:Q',title="",axis=None),
     color=alt.Color('LABEL:O',legend=None, scale=alt.Scale(domain=domain, range=range_)),
     text='size:Q',
-    tooltip=[alt.Tooltip('LABEL:O', title='Price range for square meters'),
+    tooltip=[alt.Tooltip('LABEL:O', title='Price for square meters'),
              alt.Tooltip('size:Q', title='Number of buildings'),]
       
 )

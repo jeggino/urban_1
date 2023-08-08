@@ -141,11 +141,11 @@ st.data_editor(
     data_df,
     column_config={
         "size": st.column_config.ProgressColumn(
-            "Ammount",
+            "Amount",
             help="Number of building for this class",
-            # format="$%f",
-            min_value=data_df.size.min(),
-            max_value=data_df.size.max(),
+            format="%f",
+            min_value=data_df['size'].min(),
+            max_value=data_df['size'].max(),
         ),
     },
     hide_index=True,

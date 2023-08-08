@@ -76,7 +76,7 @@ icon_data = {
 data = train_stations.loc[station]
 data["icon_data"] = icon_data
 data = data.to_frame().T[["geometry","icon_data"]].reset_index()
-data = gpd.GeoDataFrame(data,geometry='gemetry',crs=4979)
+data = gpd.GeoDataFrame(data,geometry='geometry',crs=4979)
 
 
 icon_layer = pdk.Layer(

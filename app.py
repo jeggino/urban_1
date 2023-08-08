@@ -22,26 +22,21 @@ def data_buildings():
         df = pd.concat([df, gdf], ignore_index=True)
     return df
 
-# @st.cache_data
-# def data():
-#     buildings = data_buildings()
-#     train_stations = gpd.read_file(f'train_stations.geojson')
-#     return buildings, train_stations
+@st.cache_data
+def data():
+    buildings = data_buildings()
+    train_stations = gpd.read_file(f'train_stations.geojson')
+    return buildings, train_stations
 
 
-# buildings = data()[0]
-# train_stations = data()[1]
-
-train_stations = gpd.read_file('train_stations.geojson')
-buildings = data_buildings()
-
-
-
+buildings = data()[0]
+train_stations = data()[1]
 
 #----------------------------------------------------------------
 # Creating radius buffer
 # Converting CRS to a meter based CRS
 train_stations.to_crs(crs=3857, inplace=True) 
+
 
 # Creating 1km buffer column with WKT geometry
 train_stations['buffer_geom'] = train_stations.buffer(500.0) 

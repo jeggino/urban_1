@@ -175,4 +175,4 @@ text = base.mark_text(align='left', dx=2)
 st.sidebar.altair_chart(altair_chart=(bar + text), use_container_width=True, theme="streamlit")
 
 if len(source) == 0:
-    st.sidebar.warning('If no buildings are showing, try a larger buffer', icon="📏 ")
+    st.sidebar.warning('If no buildings are showing, try a larger buffer', icon="📏")

@@ -99,11 +99,6 @@ df_polygons.to_crs(crs=4979, inplace=True)
 
 st.dataframe(df_polygons.drop('geometry',axis=1))
 
-# import matplotlib.pyplot as plt
-
-
-st.pyplot(df_polygons.plot())
-
 
 polygon_layer = pdk.Layer("GeoJsonLayer", 
     data=df_polygons, 
@@ -120,7 +115,7 @@ polygon_layer = pdk.Layer("GeoJsonLayer",
 
 #----------------------------------------------------------------
 layers = [
-    polygon_layer,
+    # polygon_layer,
     icon_layer
 ]
 

@@ -76,8 +76,9 @@ icon_data = {
 data = train_stations.loc[station]
 data["icon_data"] = icon_data
 data = data.to_frame().T[["geometry","icon_data"]].reset_index()
+data.to_crs(crs=4979, inplace=True) 
 
-st.dataframe(data)
+# st.dataframe(data)
 
 
 icon_layer = pdk.Layer(

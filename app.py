@@ -61,9 +61,6 @@ intersected = buildings[buildings['geometry'].intersects(train_stations.loc[stat
 
 df_WONINGWAARDE_2022 = gpd.read_file("https://maps.amsterdam.nl/open_geodata/geojson_lnglat.php?KAARTLAAG=WONINGWAARDE_2022&THEMA=woningwaarde")
 
-st.dataframe(df_WONINGWAARDE_2022.drop('geometry',axis=1))
-
-
 df_join = gpd.sjoin(intersected, df_WONINGWAARDE_2022.to_crs(intersected.crs))
 
 #----------------------------------------------------------------
@@ -99,6 +96,9 @@ colors = dict(zip(df_join.LABEL.sort_values().unique().tolist(),
 df_polygons = df_join[["geometry","LABEL"]]
 df_polygons['color'] = df_polygons["LABEL"].map(colors).apply(lambda x: [i*255 for i in x])
 df_polygons.to_crs(crs=4979, inplace=True) 
+
+st.dataframe(df_polygons.drop('geometry',axis=1))
+
 
 polygon_layer = pdk.Layer("GeoJsonLayer", 
     data=df_polygons , 

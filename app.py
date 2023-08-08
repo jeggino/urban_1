@@ -135,17 +135,17 @@ st.pydeck_chart(map)
 #----------------------------------------------------------------
 
 
-data_df = df_join.LABEL.value_counts().to_frame().reset_index()
+data_df = df_join.groupby("LABEL",as_index=False).size()
 
 st.data_editor(
     data_df,
     column_config={
-        "LABEL": st.column_config.ProgressColumn(
+        "size": st.column_config.ProgressColumn(
             "Ammount",
             help="Number of building for this class",
-            format="$%f",
-            min_value=data_df.LABEL.min(),
-            max_value=data_df.LABEL.max(),
+            # format="$%f",
+            min_value=data_df.size.min(),
+            max_value=data_df.size.max(),
         ),
     },
     hide_index=True,

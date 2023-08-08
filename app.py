@@ -64,7 +64,7 @@ df_WONINGWAARDE_2022 = gpd.read_file("https://maps.amsterdam.nl/open_geodata/geo
 df_join = gpd.sjoin(intersected, df_WONINGWAARDE_2022.to_crs(intersected.crs))
 
 #----------------------------------------------------------------
-ICON_URL = "https://i2.wp.com/www.banksandlloyd.com/wp-content/uploads/2018/10/train-icon-web-small.png?ssl=1"
+ICON_URL = "https://icon-library.com/images/train-icon-png/train-icon-png-11.jpg"
 
 icon_data = {
     "url": ICON_URL,
@@ -85,7 +85,8 @@ icon_layer = pdk.Layer(
     data=data,
     get_icon="icon_data",
     size_scale=60,
-    get_position="[geometry.x,geometry.y]",
+    get_position=[train_stations.loc[station].geometry.x, 
+                  train_stations.loc[station].geometry.y],
     pickable=True,
 )
 

@@ -38,7 +38,7 @@ train_stations = data()[1]
 # Converting CRS to a meter based CRS
 train_stations.to_crs(crs=3857, inplace=True) 
 
-BUFFER = right.slider('Creating buffer from the train stattion (meters)', 0, 1000, 500)
+BUFFER = st.sidebar.slider('Creating buffer from the train stattion (meters)', 0, 1000, 500)
 # Creating 1km buffer column with WKT geometry
 train_stations['buffer_geom'] = train_stations.buffer(int(BUFFER)) 
 
@@ -52,7 +52,7 @@ train_stations.set_geometry("buffer_geom", inplace=True)
 train_stations.set_index("name", inplace=True)
 
 #----------------------------------------------------------------
-station = left.selectbox(label="Chose a station", options=train_stations.index, label_visibility="visible")
+station = st.sidebar.selectbox(label="Chose a station", options=train_stations.index, label_visibility="visible")
 
 buildings.to_crs(crs=train_stations.crs, inplace=True) 
 intersected = buildings[buildings['geometry'].intersects(train_stations.loc[station, 'buffer_geom'])]

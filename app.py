@@ -54,7 +54,7 @@ train_stations = data()[1]
 # Converting CRS to a meter based CRS
 train_stations.to_crs(crs=3857, inplace=True) 
 
-BUFFER = st.sidebar.slider('Creating buffer from the train stattion (meters)', 0, 1000, 500)
+BUFFER = st.sidebar.slider('Select the distance (metres) from the train station', 0, 1000, 500)
 # Creating 1km buffer column with WKT geometry
 train_stations['buffer_geom'] = train_stations.buffer(int(BUFFER)) 
 

@@ -36,7 +36,7 @@ train_stations = gpd.read_file(f'train_stations.geojson')
 buildings = gpd.read_file('buildings_1.geojson')
 
 polygon_layer = pdk.Layer("GeoJsonLayer", 
-    data=train_stations , 
+    data=buildings , 
     # get_fill_color='color',
     # pickable=True,
     # opacity=0.8,

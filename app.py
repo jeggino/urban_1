@@ -19,7 +19,7 @@ def data_buildings():
     df = pd.DataFrame()
     for i in range(10):
         gdf = gpd.read_file(f'buildings_{i}.geojson')
-        df = pd.concat([df, buildings_0], ignore_index=True)
+        df = pd.concat([df, gdf], ignore_index=True)
     return df
 
 # @st.cache_data

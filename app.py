@@ -65,8 +65,6 @@ st.dataframe(df_WONINGWAARDE_2022.drop('geometry',axis=1))
 
 
 df_join = gpd.sjoin(intersected, df_WONINGWAARDE_2022.to_crs(intersected.crs))
-df_join.to_crs(crs=4979, inplace=True) 
-
 
 #----------------------------------------------------------------
 ICON_URL = "https://i2.wp.com/www.banksandlloyd.com/wp-content/uploads/2018/10/train-icon-web-small.png?ssl=1"

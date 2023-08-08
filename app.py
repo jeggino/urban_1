@@ -68,7 +68,7 @@ ICON_URL = "https://th.bing.com/th/id/R.210d1413e803794de617b1e6c6eddcdb?rik=NGX
 
 icon_data = {
     "url": ICON_URL,
-    "width": 242,
+    "width": 442,
     "height": 242,
     "anchorY": 242,
 }
@@ -86,7 +86,7 @@ icon_layer = pdk.Layer(
     size_scale=60,
     get_position=[train_stations.loc[station].geometry.x, 
                   train_stations.loc[station].geometry.y],
-    pickable=True,
+    # pickable=True,
 )
 
 
@@ -128,7 +128,7 @@ INITIAL_VIEW_STATE = pdk.ViewState(
 map = pdk.Deck(layers,
          map_style='road',
          initial_view_state=INITIAL_VIEW_STATE, 
-         tooltip={"text": "{index}, {LABEL}"},
+         tooltip={"text": "WONINGWAARDE 2022: {LABEL}"},
         )
 
 #----------------------------------------------------------------

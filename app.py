@@ -65,8 +65,8 @@ ICON_URL = "https://th.bing.com/th/id/R.210d1413e803794de617b1e6c6eddcdb?rik=NGX
 
 icon_data = {
     "url": ICON_URL,
-    "width": 442,
-    "height": 242,
+    "width": 242,
+    "height": 142,
     "anchorY": 242,
 }
 

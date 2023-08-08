@@ -68,7 +68,7 @@ train_stations.set_geometry("buffer_geom", inplace=True)
 train_stations.set_index("name", inplace=True)
 
 #----------------------------------------------------------------
-station = st.sidebar.selectbox(label="Chose a station", options=train_stations.index, label_visibility="visible")
+station = st.sidebar.selectbox(label="Choose a train station", options=train_stations.index, label_visibility="visible")
 
 buildings.to_crs(crs=train_stations.crs, inplace=True) 
 intersected = buildings[buildings['geometry'].intersects(train_stations.loc[station, 'buffer_geom'])]

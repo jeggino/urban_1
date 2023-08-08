@@ -130,29 +130,32 @@ map = pdk.Deck(layers,
         )
 
 #----------------------------------------------------------------
-st.pydeck_chart(map)
+right.pydeck_chart(map)
 
 
 #----------------------------------------------------------------
+import altair as alt
 
+source = df_join.groupby("LABEL",as_index=False).size()
 
-# data_df = df_join.groupby("LABEL",as_index=False).size()
-data_df = pd.DataFrame(
-    {
-        "sales": [200, 550, 1000, 80],
-    }
+domain = df_join.LABEL.sort_values().unique().tolist()
+range_ = list(sns.color_palette("husl", len(df_join.LABEL.sort_values().unique())).as_hex())
+
+base = alt.Chart(source).encode(
+    y=alt.Y('LABEL:O',title=""),
+    x=alt.X('size:Q',title="Number of buildings",axis=None),
+    color=alt.Color('LABEL:O',legend=None, scale=alt.Scale(domain=domain, range=range_)),
+    text='size:Q'
 )
 
-st.data_editor(
-    data_df,
-    column_config={
-        "sales": st.column_config.ProgressColumn(
-            "Amount",
-            help="Number of building for this class",
-            format="%f",
-            min_value=80,
-            max_value=1000,
-        ),
-    },
-    hide_index=True,
+bar = base.mark_bar(
+    cornerRadiusBottomRight=3,
+    cornerRadiusTopRight=3,
+    
 )
+
+text = base.mark_text(align='left', dx=2)
+
+left.altair_chart(altair_chart=(bar + text), use_container_width=True, theme=None)
+
+

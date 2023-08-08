@@ -63,12 +63,12 @@ polygon_layer = pdk.Layer("GeoJsonLayer",
     data=intersected , 
     # # get_fill_color='color',
     # pickable=True,
-    # opacity=0.8,
-    # stroked=False,
+    opacity=0.8,
+    stroked=True,
     # # filled=True,
-    # extruded=True,
-    # wireframe=True,
-    # get_elevation=10
+    extruded=True,
+    wireframe=True,
+    get_elevation=10
     )
 
 

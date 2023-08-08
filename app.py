@@ -115,8 +115,8 @@ polygon_layer = pdk.Layer("GeoJsonLayer",
 
 #----------------------------------------------------------------
 layers = [
-    # polygon_layer,
-    icon_layer
+    polygon_layer,
+    # icon_layer
 ]
 
 INITIAL_VIEW_STATE = pdk.ViewState(

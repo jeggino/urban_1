@@ -16,14 +16,14 @@ st.set_page_config(
 st.markdown("""
 <style>
 .reportview-container .main .block-container {
-    max-width: 100%;
+    max-width: 50%;
     
 }
 .sidebar .sidebar-content {
-    width: 500px;
+    width: 300px;
     background-color: #F5F5F5;
     color: #000000;
-    font-size: 15px;
+    font-size: 10px;
 }
 </style>
 """, unsafe_allow_html=True)

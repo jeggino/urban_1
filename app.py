@@ -59,6 +59,7 @@ station = st.selectbox(label="Chose a station", options=train_stations.index, la
 buildings.to_crs(crs=train_stations.crs, inplace=True) 
 intersected = buildings[buildings['geometry'].intersects(train_stations.loc[station, 'buffer_geom'])]
 
+st.dataframe(intersected.drop('geometry',axis=1)
 polygon_layer = pdk.Layer("GeoJsonLayer", 
     data=intersected , 
     # # get_fill_color='color',

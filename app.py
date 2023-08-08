@@ -13,6 +13,22 @@ st.set_page_config(
     layout="wide",
 )
 
+st.markdown("""
+<style>
+.reportview-container .main .block-container {
+    max-width: 100%;
+    
+}
+.sidebar .sidebar-content {
+    width: 500px;
+    background-color: #F5F5F5;
+    color: #000000;
+    font-size: 15px;
+}
+</style>
+""", unsafe_allow_html=True)
+
+
 left, right = st.columns([2,3])
 #----------------------------------------------------------------
 @st.cache_data

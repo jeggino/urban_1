@@ -77,6 +77,8 @@ data = train_stations.loc[station]
 data["icon_data"] = icon_data
 data = data.to_frame().T[["geometry","icon_data"]].reset_index()
 
+st.dataframe(data)
+
 
 icon_layer = pdk.Layer(
     type="IconLayer",
@@ -96,9 +98,6 @@ colors = dict(zip(df_join.LABEL.sort_values().unique().tolist(),
 df_polygons = df_join[["geometry","LABEL"]]
 df_polygons['color'] = df_polygons["LABEL"].map(colors).apply(lambda x: [i*255 for i in x])
 df_polygons.to_crs(crs=4979, inplace=True) 
-
-st.dataframe(df_polygons.drop('geometry',axis=1))
-
 
 polygon_layer = pdk.Layer("GeoJsonLayer", 
     data=df_polygons, 
